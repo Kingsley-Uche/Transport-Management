@@ -93,12 +93,19 @@ class PriceController extends Controller
     }
     public function data(Request $request){
         $data=($request->input()) ;
-        print_r($data);
+        
    $location= $data['location'];
    $destination=$data['destination'];
    $persons=$data['number_of_adults'];
    $date=$data['date'];
-   
+   $results=Price::select('cost')->where([
+    ['location','=',"$location"],
+['destination','=',"$destination"],
+])->get()->toArray();
 
+
+$cost= $results[0]['cost'];
+return view('price');
     }
 }
+
